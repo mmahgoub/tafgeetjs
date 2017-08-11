@@ -5,18 +5,18 @@
  * @author Mohammed Mahgoub <mmahgoub@gmail.com>
  */
 
-function Tafgeet(digit, currency = 'SDG') {
-	//Split fractions
-  var splitted = digit.toString().split('.')
+function Tafgeet(digit, currency = "SDG") {
+  //Split fractions
+  var splitted = digit.toString().split(".");
   this.fraction = 0;
-  if(splitted.length > 1){
-  	var fraction = parseInt(splitted[1])
-  	if(fraction >= 1 && fraction <= 99){
-    	this.fraction = fraction;
-    }else{
-    	//trim it
+  if (splitted.length > 1) {
+    var fraction = parseInt(splitted[1]);
+    if (fraction >= 1 && fraction <= 99) {
+      this.fraction = fraction;
+    } else {
+      //trim it
       var trimmed = Array.from(splitted[1]);
-      this.fraction = ''+trimmed[0]+trimmed[1]
+      this.fraction = "" + trimmed[0] + trimmed[1];
     }
   }
   this.digit = splitted[0];
@@ -24,92 +24,102 @@ function Tafgeet(digit, currency = 'SDG') {
 }
 
 Tafgeet.prototype.parse = function() {
-
-  var serialized = []
-  var tmp = []
+  var serialized = [];
+  var tmp = [];
   var inc = 1;
   var count = this.length();
-	if(count >= 16){
-  	console.error("Number out of range!");
-  	return;
+  if (count >= 16) {
+    console.error("Number out of range!");
+    return;
   }
   //Sperate the number into columns
   Array.from(this.digit.toString()).reverse().forEach(function(d, i) {
     tmp.push(d);
     if (inc == 3) {
-      serialized.unshift(tmp)
-      tmp = []
-      inc = 0
+      serialized.unshift(tmp);
+      tmp = [];
+      inc = 0;
     }
     if (inc == 0 && count - (i + 1) < 3 && count - (i + 1) != 0) {
-      serialized.unshift(tmp)
+      serialized.unshift(tmp);
     }
     inc++;
   });
 
-  var str = '';
-  str += 'فقط ';
-  
+  var str = "";
+  str += "فقط ";
+
   if (this.length() >= 1 && this.length() <= 3) {
-    str += this.read(this.digit)
+    str += this.read(this.digit);
   } else {
     var column = this.getColumnIndex();
     for (i = 0; i < serialized.length; i++) {
-      var joinedNumber = parseInt(serialized[i].reverse().join(''))
-      if(joinedNumber == 0){
-      	column++;
-      	continue;
+      var joinedNumber = parseInt(serialized[i].reverse().join(""));
+      if (joinedNumber == 0) {
+        column++;
+        continue;
       }
       if (column == null || column + 1 > this.columns.length) {
-        str += this.read(joinedNumber)
+        str += this.read(joinedNumber);
       } else {
-        str += this.addSuffixPrefix(serialized[i], column) + ' و'
+        str += this.addSuffixPrefix(serialized[i], column) + " و";
       }
       column++;
     }
   }
-  
-  if(this.currency != ''){
+
+  if (this.currency != "") {
     if (this.digit >= 3 && this.digit <= 10) {
-      str += ' ' + this.currencies[this.currency].plural
+      str += " " + this.currencies[this.currency].plural;
     } else {
-      str += ' ' + this.currencies[this.currency].singular
+      str += " " + this.currencies[this.currency].singular;
     }
-    
-    if(this.fraction != 0){
-    	if (this.digit >= 3 && this.digit <= 10) {
-    		str += ' و' + this.read(this.fraction) + ' ' + this.currencies[this.currency].fractions
-      }else{
-      	str += ' و' + this.read(this.fraction) + ' ' + this.currencies[this.currency].fraction
+
+    if (this.fraction != 0) {
+      if (this.digit >= 3 && this.digit <= 10) {
+        str +=
+          " و" +
+          this.read(this.fraction) +
+          " " +
+          this.currencies[this.currency].fractions;
+      } else {
+        str +=
+          " و" +
+          this.read(this.fraction) +
+          " " +
+          this.currencies[this.currency].fraction;
       }
     }
   }
-  
-  str += ' لا غير';
+
+  str += " لا غير";
   return str;
-}
+};
 
 Tafgeet.prototype.addSuffixPrefix = function(arr, column) {
   if (arr.length == 1) {
     if (parseInt(arr[0]) == 1) {
-      return this[this.columns[column]].singular
+      return this[this.columns[column]].singular;
     }
     if (parseInt(arr[0]) == 2) {
-      return this[this.columns[column]].binary
+      return this[this.columns[column]].binary;
     }
     if (parseInt(arr[0]) > 2 && parseInt(arr[0]) <= 9) {
-      return this.readOnes(parseInt(arr[0])) + ' ' + this[this.columns[column]].plural
+      return (
+        this.readOnes(parseInt(arr[0])) +
+        " " +
+        this[this.columns[column]].plural
+      );
     }
   } else {
-    var joinedNumber = parseInt(arr.join(''))
-    return this.read(joinedNumber) + ' ' + this[this.columns[column]].singular
+    var joinedNumber = parseInt(arr.join(""));
+    return this.read(joinedNumber) + " " + this[this.columns[column]].singular;
   }
-
-}
+};
 
 Tafgeet.prototype.read = function(d) {
-  var str = ''
-  var len = Array.from(d.toString()).length
+  var str = "";
+  var len = Array.from(d.toString()).length;
   if (len == 1) {
     str += this.readOnes(d);
   } else if (len == 2) {
@@ -118,40 +128,51 @@ Tafgeet.prototype.read = function(d) {
     str += this.readHundreds(d);
   }
   return str;
-}
+};
 
 Tafgeet.prototype.readOnes = function(d) {
   if (d == 0) return;
-  return this.ones['_' + d.toString()];
-}
+  return this.ones["_" + d.toString()];
+};
 Tafgeet.prototype.readTens = function(d) {
-  if (Array.from(d.toString())[1] === '0') {
-    return this.tens['_' + d.toString()];
+  if (Array.from(d.toString())[1] === "0") {
+    return this.tens["_" + d.toString()];
   }
   if (d > 10 && d < 20) {
-    return this.teens['_' + d.toString()];
+    return this.teens["_" + d.toString()];
   }
-  if (d > 19 && d < 100 && Array.from(d.toString())[1] !== '0') {
-    return this.readOnes(Array.from(d.toString())[1]) + ' و' + this.tens['_' + Array.from(d.toString())[0] + '0'];
+  if (d > 19 && d < 100 && Array.from(d.toString())[1] !== "0") {
+    return (
+      this.readOnes(Array.from(d.toString())[1]) +
+      " و" +
+      this.tens["_" + Array.from(d.toString())[0] + "0"]
+    );
   }
-}
+};
 Tafgeet.prototype.readHundreds = function(d) {
   var str = "";
-  str += this.hundreds['_' + Array.from(d.toString())[0] + '00'];
+  str += this.hundreds["_" + Array.from(d.toString())[0] + "00"];
 
-  if (Array.from(d.toString())[1] === '0' && Array.from(d.toString())[2] !== '0') {
-    str += ' و' + this.readOnes(Array.from(d.toString())[2])
+  if (
+    Array.from(d.toString())[1] === "0" &&
+    Array.from(d.toString())[2] !== "0"
+  ) {
+    str += " و" + this.readOnes(Array.from(d.toString())[2]);
   }
 
-  if (Array.from(d.toString())[1] !== '0') {
-    str += ' و' + this.readTens((Array.from(d.toString())[1] + Array.from(d.toString())[2]).toString());
+  if (Array.from(d.toString())[1] !== "0") {
+    str +=
+      " و" +
+      this.readTens(
+        (Array.from(d.toString())[1] + Array.from(d.toString())[2]).toString()
+      );
   }
   return str;
-}
+};
 
 Tafgeet.prototype.length = function() {
   return Array.from(this.digit.toString()).length;
-}
+};
 
 Tafgeet.prototype.getColumnIndex = function() {
   var column = null;
@@ -165,113 +186,113 @@ Tafgeet.prototype.getColumnIndex = function() {
     column = 3;
   }
   return column;
-}
+};
 
 Tafgeet.prototype.ones = {
-  _1: 'واحد',
-  _2: 'إثنين',
-  _3: 'ثلاثة',
-  _4: 'أربعة',
-  _5: 'خمسة',
-  _6: 'ستة',
-  _7: 'سبعة',
-  _8: 'ثمانية',
-  _9: 'تسعة'
-}
+  _1: "واحد",
+  _2: "إثنين",
+  _3: "ثلاثة",
+  _4: "أربعة",
+  _5: "خمسة",
+  _6: "ستة",
+  _7: "سبعة",
+  _8: "ثمانية",
+  _9: "تسعة"
+};
 
 Tafgeet.prototype.teens = {
-  _11: 'أحد عشر',
-  _12: 'أثني عشر',
-  _13: 'ثلاثة عشر',
-  _14: 'أربعة عشر',
-  _15: 'خمسة عشر',
-  _16: 'ستة عشر',
-  _17: 'سبعة عشر',
-  _18: 'ثمانية عشر',
-  _19: 'تسعة عشر',
-}
+  _11: "أحد عشر",
+  _12: "أثني عشر",
+  _13: "ثلاثة عشر",
+  _14: "أربعة عشر",
+  _15: "خمسة عشر",
+  _16: "ستة عشر",
+  _17: "سبعة عشر",
+  _18: "ثمانية عشر",
+  _19: "تسعة عشر"
+};
 
 Tafgeet.prototype.tens = {
-  _10: 'عشرة',
-  _20: 'عشرين',
-  _30: 'ثلاثين',
-  _40: 'أربعين',
-  _50: 'خمسين',
-  _60: 'ستين',
-  _70: 'سبعين',
-  _80: 'ثمانين',
-  _90: 'تسعين'
-}
+  _10: "عشرة",
+  _20: "عشرين",
+  _30: "ثلاثين",
+  _40: "أربعين",
+  _50: "خمسين",
+  _60: "ستين",
+  _70: "سبعين",
+  _80: "ثمانين",
+  _90: "تسعين"
+};
 Tafgeet.prototype.hundreds = {
-  _100: 'مائة',
-  _200: 'مائتين',
-  _300: 'ثلاثمائة',
-  _400: 'أربعمائة',
-  _500: 'خمسمائة',
-  _600: 'ستمائة',
-  _700: 'سبعمائة',
-  _800: 'ثمانمائة',
-  _900: 'تسعمائة'
-}
+  _100: "مائة",
+  _200: "مائتين",
+  _300: "ثلاثمائة",
+  _400: "أربعمائة",
+  _500: "خمسمائة",
+  _600: "ستمائة",
+  _700: "سبعمائة",
+  _800: "ثمانمائة",
+  _900: "تسعمائة"
+};
 Tafgeet.prototype.thousands = {
-  singular: 'ألف',
-  binary: 'ألفين',
-  plural: 'ألآف',
-}
+  singular: "ألف",
+  binary: "ألفين",
+  plural: "ألآف"
+};
 Tafgeet.prototype.milions = {
-  singular: 'مليون',
-  binary: 'مليونين',
-  plural: 'ملايين',
-}
+  singular: "مليون",
+  binary: "مليونين",
+  plural: "ملايين"
+};
 Tafgeet.prototype.bilions = {
-  singular: 'مليار',
-  binary: 'مليارين',
-  plural: 'مليارات',
-}
+  singular: "مليار",
+  binary: "مليارين",
+  plural: "مليارات"
+};
 Tafgeet.prototype.trilions = {
-  singular: 'ترليون',
-  binary: 'ترليونين',
-  plural: 'ترليونات',
-}
-Tafgeet.prototype.columns = ['trilions', 'bilions', 'milions', 'thousands'];
+  singular: "ترليون",
+  binary: "ترليونين",
+  plural: "ترليونات"
+};
+Tafgeet.prototype.columns = ["trilions", "bilions", "milions", "thousands"];
 
 Tafgeet.prototype.currencies = {
   SDG: {
-    singular: 'جنيه سوداني',
-    plural: 'جنيهات سودانية',
-    fraction: 'قرش',
-    fractions: 'قروش',
+    singular: "جنيه سوداني",
+    plural: "جنيهات سودانية",
+    fraction: "قرش",
+    fractions: "قروش"
   },
   SAR: {
-    singular: 'ريال سعودي',
-    plural: 'ريالات سعودية',
-    fraction: 'هللة',
-    fractions: 'هللات',
+    singular: "ريال سعودي",
+    plural: "ريالات سعودية",
+    fraction: "هللة",
+    fractions: "هللات"
   },
- QR: {
-    singular: 'ريال قطري',
-    plural: 'ريالات قطرية',
-    fraction: 'درهم',
-    fractions: 'دراهم',
+  QR: {
+    singular: "ريال قطري",
+    plural: "ريالات قطرية",
+    fraction: "درهم",
+    fractions: "دراهم"
   },
- AED: {
-    singular: 'درهم أماراتي',
-    plural: 'دراهم أماراتية',
-    fraction: 'فلس',
-    fractions: 'فلوس',
+  AED: {
+    singular: "درهم أماراتي",
+    plural: "دراهم أماراتية",
+    fraction: "فلس",
+    fractions: "فلوس"
   },
   EGP: {
-    singular: 'جنيه مصري',
-    plural: 'جنيهات مصرية',
-    fraction: 'قرش',
-    fractions: 'قروش',
+    singular: "جنيه مصري",
+    plural: "جنيهات مصرية",
+    fraction: "قرش",
+    fractions: "قروش"
   },
   USD: {
-    singular: 'دولار أمريكي',
-    plural: 'دولارات أمريكية',
-    fraction: 'سنت',
-    fractions: 'سنتات',
-  },
-}
+    singular: "دولار أمريكي",
+    plural: "دولارات أمريكية",
+    fraction: "سنت",
+    fractions: "سنتات"
+  }
+};
 
 module.exports = Tafgeet;
