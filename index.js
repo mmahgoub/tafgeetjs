@@ -56,6 +56,10 @@ Tafgeet.prototype.parse = function() {
     var column = this.getColumnIndex();
     for (i = 0; i < serialized.length; i++) {
       var joinedNumber = parseInt(serialized[i].reverse().join(''))
+      if(joinedNumber == 0){
+      	column++;
+      	continue;
+      }
       if (column == null || column + 1 > this.columns.length) {
         str += this.read(joinedNumber)
       } else {
