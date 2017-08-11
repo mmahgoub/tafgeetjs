@@ -190,7 +190,7 @@ Tafgeet.prototype.getColumnIndex = function() {
 
 Tafgeet.prototype.ones = {
   _1: "واحد",
-  _2: "إثنين",
+  _2: "ٱثنين",
   _3: "ثلاثة",
   _4: "أربعة",
   _5: "خمسة",
@@ -292,6 +292,12 @@ Tafgeet.prototype.currencies = {
     plural: "دولارات أمريكية",
     fraction: "سنت",
     fractions: "سنتات"
+  },
+  TND: {
+    singular: "دينار تونسي",
+    plural: "دنانير تونسية",
+    fraction: "مليم",
+    fractions: "مليمات"
   }
 };
 
