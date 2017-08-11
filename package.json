@@ -1,0 +1,25 @@
+{
+  "name": "tafgeetjs",
+  "version": "1.0.0",
+  "description": "Converts currency digits into written Arabic words",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmahgoub/tafgeetjs.git"
+  },
+  "keywords": [
+    "tafgeet",
+    "arabic",
+    "numbers",
+    "words"
+  ],
+  "author": "Mohammed Mahgoub",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmahgoub/tafgeetjs/issues"
+  },
+  "homepage": "https://github.com/mmahgoub/tafgeetjs#readme"
+}
