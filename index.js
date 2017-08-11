@@ -46,6 +46,17 @@ Tafgeet.prototype.parse = function() {
     inc++;
   });
 
+  // Generate concatenation array
+  var concatsArr = Array.from(serialized)
+  for(i=0; i < concatsArr.length; i++){
+ 		if(parseInt(concatsArr[i].join("")) > 0){
+    	concatsArr[i] = " و";
+    }else{
+    	concatsArr[i] = "";
+    }
+  }
+  concatsArr.reverse();
+
   var str = "";
   str += "فقط ";
 
@@ -62,7 +73,7 @@ Tafgeet.prototype.parse = function() {
       if (column == null || column + 1 > this.columns.length) {
         str += this.read(joinedNumber);
       } else {
-        str += this.addSuffixPrefix(serialized[i], column) + " و";
+        str += this.addSuffixPrefix(serialized[i], column) + concatsArr[i];
       }
       column++;
     }
