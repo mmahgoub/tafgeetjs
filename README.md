@@ -17,6 +17,7 @@ You need to pass number and currency symbol as strings otherwise you will not ge
 - AED (Emarati Dirham)
 - EGP (Egyptian Pound)
 - USD (US Dollars)
+- TND (Tunisian Dinar) - *by [@atefBB](https://github.com/atefBB)*
 
 ## TODOs: 
 - Support more currencies
