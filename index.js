@@ -63,7 +63,7 @@ Tafgeet.prototype.parse = function () {
   if (total == 0) {
     concats.shift()
   }
-  
+
   var str = "";
   str += "فقط ";
 
@@ -287,7 +287,7 @@ Tafgeet.prototype.currencies = {
     fraction: "هللة",
     fractions: "هللات"
   },
-  QR: {
+  QAR: {
     singular: "ريال قطري",
     plural: "ريالات قطرية",
     fraction: "درهم",

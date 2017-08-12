@@ -13,7 +13,7 @@ You need to pass number and currency symbol as strings otherwise you will not ge
 ## Supported currencies: 
 - SDG (Sudanese Pound) - *Default*
 - SAR (Saudi Riyal)
-- QR (Qatari Riyal)
+- QAR (Qatari Riyal)
 - AED (Emarati Dirham)
 - EGP (Egyptian Pound)
 - USD (US Dollars)
