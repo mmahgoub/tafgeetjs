@@ -1,6 +1,6 @@
 {
   "name": "tafgeetjs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Converts currency digits into written Arabic words",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "tafgeet",
+    "tafqeet",
     "arabic",
     "numbers",
     "words"

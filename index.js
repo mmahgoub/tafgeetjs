@@ -22,8 +22,7 @@ function Tafgeet(digit, currency = "SDG") {
   this.digit = splitted[0];
   this.currency = currency;
 }
-
-Tafgeet.prototype.parse = function() {
+Tafgeet.prototype.parse = function () {
   var serialized = [];
   var tmp = [];
   var inc = 1;
@@ -33,7 +32,7 @@ Tafgeet.prototype.parse = function() {
     return;
   }
   //Sperate the number into columns
-  Array.from(this.digit.toString()).reverse().forEach(function(d, i) {
+  Array.from(this.digit.toString()).reverse().forEach(function (d, i) {
     tmp.push(d);
     if (inc == 3) {
       serialized.unshift(tmp);
@@ -48,15 +47,23 @@ Tafgeet.prototype.parse = function() {
 
   // Generate concatenation array
   var concatsArr = Array.from(serialized)
-  for(i=0; i < concatsArr.length; i++){
- 		if(parseInt(concatsArr[i].join("")) > 0){
-    	concatsArr[i] = " و";
-    }else{
-    	concatsArr[i] = "";
+  var concats = []
+  var total = 0;
+  for (i = 0; i < concatsArr.length; i++) {
+    var joined = parseInt(concatsArr[i].join(""));
+    if (joined > 0) {
+      if (i != 0) {
+        total++;
+      }
+      concats[i] = " و";
+    } else {
+      concats[i] = "";
     }
   }
-  concatsArr.reverse();
-
+  if (total == 0) {
+    concats.shift()
+  }
+  
   var str = "";
   str += "فقط ";
 
@@ -73,7 +80,7 @@ Tafgeet.prototype.parse = function() {
       if (column == null || column + 1 > this.columns.length) {
         str += this.read(joinedNumber);
       } else {
-        str += this.addSuffixPrefix(serialized[i], column) + concatsArr[i];
+        str += this.addSuffixPrefix(serialized[i], column) + concats[i];
       }
       column++;
     }
@@ -107,7 +114,7 @@ Tafgeet.prototype.parse = function() {
   return str;
 };
 
-Tafgeet.prototype.addSuffixPrefix = function(arr, column) {
+Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
   if (arr.length == 1) {
     if (parseInt(arr[0]) == 1) {
       return this[this.columns[column]].singular;
@@ -128,7 +135,7 @@ Tafgeet.prototype.addSuffixPrefix = function(arr, column) {
   }
 };
 
-Tafgeet.prototype.read = function(d) {
+Tafgeet.prototype.read = function (d) {
   var str = "";
   var len = Array.from(d.toString()).length;
   if (len == 1) {
@@ -141,11 +148,11 @@ Tafgeet.prototype.read = function(d) {
   return str;
 };
 
-Tafgeet.prototype.readOnes = function(d) {
+Tafgeet.prototype.readOnes = function (d) {
   if (d == 0) return;
   return this.ones["_" + d.toString()];
 };
-Tafgeet.prototype.readTens = function(d) {
+Tafgeet.prototype.readTens = function (d) {
   if (Array.from(d.toString())[1] === "0") {
     return this.tens["_" + d.toString()];
   }
@@ -160,7 +167,7 @@ Tafgeet.prototype.readTens = function(d) {
     );
   }
 };
-Tafgeet.prototype.readHundreds = function(d) {
+Tafgeet.prototype.readHundreds = function (d) {
   var str = "";
   str += this.hundreds["_" + Array.from(d.toString())[0] + "00"];
 
@@ -181,11 +188,11 @@ Tafgeet.prototype.readHundreds = function(d) {
   return str;
 };
 
-Tafgeet.prototype.length = function() {
+Tafgeet.prototype.length = function () {
   return Array.from(this.digit.toString()).length;
 };
 
-Tafgeet.prototype.getColumnIndex = function() {
+Tafgeet.prototype.getColumnIndex = function () {
   var column = null;
   if (this.length() > 12) {
     column = 0;
