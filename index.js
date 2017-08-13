@@ -127,7 +127,11 @@ Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
     }
   } else {
     var joinedNumber = parseInt(arr.join(""));
-    return this.read(joinedNumber) + " " + this[this.columns[column]].singular;
+    if(joinedNumber > 1){
+      return this.read(joinedNumber) + " " + this[this.columns[column]].singular;
+    }else{
+      return this[this.columns[column]].singular;
+    }
   }
 };
 
