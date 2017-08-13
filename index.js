@@ -45,22 +45,18 @@ Tafgeet.prototype.parse = function () {
     inc++;
   });
 
-  // Generate concatenation array
+// Generate concatenation array
   var concatsArr = Array.from(serialized)
   var concats = []
-  var total = 0;
   for (i = 0; i < concatsArr.length; i++) {
     var joined = parseInt(concatsArr[i].join(""));
-    if (joined > 0) {
-      if (i != 0) {
-        total++;
-      }
+    if (joined > 0 ) {
       concats[i] = " و";
     } else {
       concats[i] = "";
     }
   }
-  if (total == 0) {
+  if (joined == 0) {
     concats.shift()
   }
 
