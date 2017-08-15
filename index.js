@@ -22,6 +22,7 @@ function Tafgeet(digit, currency = "SDG") {
   this.digit = splitted[0];
   this.currency = currency;
 }
+
 Tafgeet.prototype.parse = function () {
   var serialized = [];
   var tmp = [];
@@ -52,9 +53,18 @@ Tafgeet.prototype.parse = function () {
     concats[i] = " و";
   }
 
-  //We do not need the last "و" if the number is rounds of tens and last 3 digists are zeros
-  if (this.digit % 10 == 0 && parseInt(Array.from(serialized[serialized.length - 1]).join("")) == 0) {
-    concats[concats.length - 1] = ""
+  //We do not need some "و"s check last column if 000 drill down until otherwise
+  if (this.digit > 999) {
+    if (parseInt(Array.from(serialized[serialized.length - 1]).join("")) == 0) {
+      concats[parseInt(concats.length - 1)] = ""
+      for (i = serialized.length - 1; i >= 1; i--) {
+        if (parseInt(Array.from(serialized[i]).join("")) == 0) {
+          concats[i] = ""
+        } else {
+          break;
+        }
+      }
+    }
   }
 
   var str = "";
