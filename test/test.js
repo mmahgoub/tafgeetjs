@@ -41,6 +41,20 @@ describe('Reading numbers from 1 - 999', function() {
         assert.equal("تسعمائة وتسعة وثمانون", text.read(989));
     });
 });
+describe('Reading full amounts without a currecy specified', function() {
+    it('should read 7,564,654', function() {
+        assert.equal("فقط سبعة ملايين وخمسمائة وأربعة وستون ألف وستمائة وأربعة وخمسون لا غير", new Tafgeet('7564654', '').parse());
+    });
+    it('should read 12', function() {
+        assert.equal("فقط أثني عشر لا غير", new Tafgeet('12', '').parse());
+    });
+    it('should read 74', function() {
+        assert.equal("فقط أربعة وسبعون لا غير", new Tafgeet('74', '').parse());
+    });
+    it('should read 234', function() {
+        assert.equal("فقط مائتين وأربعة وثلاثون لا غير", new Tafgeet('234', '').parse());
+    });
+});
 describe('Reading full amounts', function() {
     it('should read SDG 1', function() {
         assert.equal("فقط واحد جنيه سوداني لا غير", new Tafgeet('1').parse());
@@ -114,5 +128,4 @@ describe('Reading full amounts', function() {
     it('should read SDG 55,000,051,000', function() {
         assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني لا غير", new Tafgeet('55000051000').parse());
     });
-    
 });

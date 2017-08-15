@@ -1,5 +1,6 @@
 # TafgeetJS
 An NPM module to convert currency digits into written Arabic words
+[https://www.npmjs.com/package/tafgeetjs](https://www.npmjs.com/package/tafgeetjs)
 
 ## How to use:
 ### Install
@@ -22,4 +23,4 @@ You need to pass number and currency symbol as strings otherwise you will not ge
 ## TODOs: 
 - Support more currencies
 - Better grammer support
-- Add test cases
+- ~~Add test cases~~
