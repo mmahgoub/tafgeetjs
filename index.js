@@ -73,10 +73,8 @@ Tafgeet.prototype.parse = function () {
   if (this.length() >= 1 && this.length() <= 3) {
     str += this.read(this.digit);
   } else {
-    var total = 0;
     for (i = 0; i < serialized.length; i++) {
       var joinedNumber = parseInt(serialized[i].reverse().join(""));
-      total += joinedNumber;
       if (joinedNumber == 0) {
         column++;
         continue;
