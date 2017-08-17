@@ -12,7 +12,7 @@ function Tafgeet(digit, currency = "SDG") {
   if (splitted.length > 1) {
     var fraction = parseInt(splitted[1]);
     if (fraction >= 1 && fraction <= 99) {
-      this.fraction = fraction;
+      this.fraction =  splitted[1].length === 1 ? fraction * 10 : fraction;
     } else {
       //trim it
       var trimmed = Array.from(splitted[1]);

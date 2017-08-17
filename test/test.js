@@ -128,4 +128,10 @@ describe('Reading full amounts', function() {
     it('should read SDG 55,000,051,000', function() {
         assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني لا غير", new Tafgeet('55000051000').parse());
     });
+    it('should read SDG 55,000,051,000.2', function() {
+        assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني وعشرون قرش لا غير", new Tafgeet('55000051000.2').parse());
+    });
+    it('should read SDG 55,000,051,000.2', function() {
+        assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني وعشرون قرش لا غير", new Tafgeet(55000051000.2).parse());
+    });
 });
