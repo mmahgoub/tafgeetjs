@@ -25,8 +25,8 @@ An NPM module to convert currency digits into written Arabic words
 - Better grammer support
 - ~~Add test cases~~
 
-## AngularJS Demo
-TafgeetJS NPM module could also be imported using ES6 import syntax, below are links to an AngularJS example project:
+## Angular Demo
+TafgeetJS NPM module could also be imported using ES6 import syntax, below are links to an Angular example project:
 
 - [Project Repo](https://github.com/mmahgoub/tafgeetjs-angular-demo/) 
 - [Live Demo](https://mmahgoub.github.io/tafgeetjs-angular-demo/)
