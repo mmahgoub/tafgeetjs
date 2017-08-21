@@ -318,6 +318,12 @@ Tafgeet.prototype.currencies = {
     fraction: "سنت",
     fractions: "سنتات"
   },
+  AUD: {
+    singular: "دولار أسترالي",
+    plural: "دولارات أسترالية",
+    fraction: "سنت",
+    fractions: "سنتات"
+  },
   TND: {
     singular: "دينار تونسي",
     plural: "دنانير تونسية",
