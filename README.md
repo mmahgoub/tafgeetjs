@@ -6,10 +6,9 @@ An NPM module to convert currency digits into written Arabic words
 ### Install
 `npm install tafgeetjs`
 ### Usage
-`Tafgeet = require('tafgeetjs');`
+`var Tafgeet = require('tafgeetjs');`
 
-`var stringText = new Tafgeet('556563.20', 'SDG').parse();` this will produce: 'فقط خمسمائة وستة وخمسون ألف وخمسمائة وثلاثة وستون جنيه سوداني وعشرون قرش لا غير' 
-~~You need to pass number and currency symbol as strings otherwise you will not get accurate readings for the fractions~~.
+`var stringText = new Tafgeet(556563.20, 'SDG').parse();` this will produce: 'فقط خمسمائة وستة وخمسون ألف وخمسمائة وثلاثة وستون جنيه سوداني وعشرون قرش لا غير'.
 
 ## Supported currencies: 
 - SDG (Sudanese Pound) - *Default*
@@ -17,8 +16,9 @@ An NPM module to convert currency digits into written Arabic words
 - QAR (Qatari Riyal)
 - AED (Emarati Dirham)
 - EGP (Egyptian Pound)
-- USD (US Dollars)
+- USD (US Dollar)
 - TND (Tunisian Dinar) - *by [@atefBB](https://github.com/atefBB)*
+- AUD (Australian Dollar) - *by [@mohamedabbasos](https://github.com/mohamedabbasos)*
 
 ## TODOs: 
 - Support more currencies
