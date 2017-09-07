@@ -5,7 +5,9 @@
  * @author Mohammed Mahgoub <mmahgoub@gmail.com>
  */
 
-function Tafgeet(digit, currency = "SDG") {
+function Tafgeet(digit) {
+  var currency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "SDG";
+  
   //Split fractions
   var splitted = digit.toString().split(".");
   this.fraction = 0;
