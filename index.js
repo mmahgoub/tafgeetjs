@@ -12,14 +12,22 @@ function Tafgeet(digit) {
   var splitted = digit.toString().split(".");
   this.fraction = 0;
   if (splitted.length > 1) {
-    var fraction = parseInt(splitted[1]);
-    if (fraction >= 1 && fraction <= 99) {
-      this.fraction =  splitted[1].length === 1 ? fraction * 10 : fraction;
-    } else {
-      //trim it
-      var trimmed = Array.from(splitted[1]);
-      this.fraction = "" + trimmed[0] + trimmed[1];
-    }
+    var fraction;
+    if(splitted[1].length > 1){
+      fraction = parseInt(splitted[1]);
+      if (fraction >= 1 && fraction <= 99) {
+        this.fraction =  splitted[1].length === 1 ? fraction * 10 : fraction;
+      } else {
+        //trim it
+        var trimmed = Array.from(splitted[1]);
+        this.fraction = "";
+        for (var index = 0; index < this.currencies[currency].decimals; index++) {
+          this.fraction += trimmed[index];
+        }
+      }
+    }else{
+      this.fraction = parseInt(splitted[1]);
+    }    
   }
   this.digit = splitted[0];
   this.currency = currency;
@@ -288,49 +296,57 @@ Tafgeet.prototype.currencies = {
     singular: "جنيه سوداني",
     plural: "جنيهات سودانية",
     fraction: "قرش",
-    fractions: "قروش"
+    fractions: "قروش",
+    decimals: 2
   },
   SAR: {
     singular: "ريال سعودي",
     plural: "ريالات سعودية",
     fraction: "هللة",
-    fractions: "هللات"
+    fractions: "هللات",
+    decimals: 2
   },
   QAR: {
     singular: "ريال قطري",
     plural: "ريالات قطرية",
     fraction: "درهم",
-    fractions: "دراهم"
+    fractions: "دراهم",
+    decimals: 2
   },
   AED: {
     singular: "درهم أماراتي",
     plural: "دراهم أماراتية",
     fraction: "فلس",
-    fractions: "فلوس"
+    fractions: "فلوس",
+    decimals: 2
   },
   EGP: {
     singular: "جنيه مصري",
     plural: "جنيهات مصرية",
     fraction: "قرش",
-    fractions: "قروش"
+    fractions: "قروش",
+    decimals: 2
   },
   USD: {
     singular: "دولار أمريكي",
     plural: "دولارات أمريكية",
     fraction: "سنت",
-    fractions: "سنتات"
+    fractions: "سنتات",
+    decimals: 2
   },
   AUD: {
     singular: "دولار أسترالي",
     plural: "دولارات أسترالية",
     fraction: "سنت",
-    fractions: "سنتات"
+    fractions: "سنتات",
+    decimals: 2
   },
   TND: {
     singular: "دينار تونسي",
     plural: "دنانير تونسية",
     fraction: "مليم",
-    fractions: "مليمات"
+    fractions: "مليمات",
+    decimals: 3
   }
 };
 
