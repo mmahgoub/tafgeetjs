@@ -1,0 +1,24 @@
+{
+  "name": "tafgeetjs",
+  "description": "Converts currency digits into written Arabic words",
+  "main": "index.js",
+  "authors": [
+    "Mohammed Mahgoub"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "tafgeet",
+    "tafqeet",
+    "arabic",
+    "numbers",
+    "words"
+  ],
+  "homepage": "https://github.com/mmahgoub/tafgeetjs",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
