@@ -349,7 +349,7 @@ Tafgeet.prototype.currencies = {
     decimals: 3
   },
   TRY: {
-    singular: "ليرة تركي",
+    singular: "ليرة تركية",
     plural: "ليرات تركية",
     fraction: "قرش",
     fractions: "قروش",
