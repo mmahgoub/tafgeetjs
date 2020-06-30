@@ -19,6 +19,7 @@ An NPM module to convert currency digits into written Arabic words
 - USD (US Dollar)
 - TND (Tunisian Dinar) - *by [@atefBB](https://github.com/atefBB)*
 - AUD (Australian Dollar) - *by [@mohamedabbasos](https://github.com/mohamedabbasos)*
+- TRY (Turkish Lira) - *by [@lokutech](https://github.com/lokutech)*
 
 ## TODOs: 
 - Support more currencies
