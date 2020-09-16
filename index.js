@@ -12,7 +12,7 @@ function Tafgeet(digit, options) {
     startWith: "فقط",
     endWith: "لا غير",
     // then overwrite with user's options
-    ...options
+    ...(options || {})
   }
 
   
