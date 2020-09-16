@@ -5,8 +5,16 @@
  * @author Mohammed Mahgoub <mmahgoub@gmail.com>
  */
 
-function Tafgeet(digit) {
-  var currency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "SDG";
+function Tafgeet(digit, options) {
+  this.computedOptions = {
+    // first we put the defaults
+    currency: "SDG",
+    startWith: "فقط",
+    endWith: "لا غير",
+    // then overwrite with user's options
+    ...options
+  }
+
   
   //Split fractions
   var splitted = digit.toString().split(".");
@@ -21,7 +29,7 @@ function Tafgeet(digit) {
         //trim it
         var trimmed = Array.from(splitted[1]);
         this.fraction = "";
-        for (var index = 0; index < this.currencies[currency].decimals; index++) {
+        for (var index = 0; index < this.currencies[this.computedOptions.currency].decimals; index++) {
           this.fraction += trimmed[index];
         }
       }
@@ -30,7 +38,6 @@ function Tafgeet(digit) {
     }    
   }
   this.digit = splitted[0];
-  this.currency = currency;
 }
 
 Tafgeet.prototype.parse = function () {
@@ -78,7 +85,9 @@ Tafgeet.prototype.parse = function () {
   }
 
   var str = "";
-  str += "فقط ";
+  if(this.computedOptions.startWith) {
+    str += this.computedOptions.startWith + " ";
+  }
 
   if (this.length() >= 1 && this.length() <= 3) {
     str += this.read(this.digit);
@@ -98,11 +107,11 @@ Tafgeet.prototype.parse = function () {
     }
   }
 
-  if (this.currency != "") {
+  if (this.computedOptions.currency != "") {
     if (this.digit >= 3 && this.digit <= 10) {
-      str += " " + this.currencies[this.currency].plural;
+      str += " " + this.currencies[this.computedOptions.currency].plural;
     } else {
-      str += " " + this.currencies[this.currency].singular;
+      str += " " + this.currencies[this.computedOptions.currency].singular;
     }
     if (this.fraction != 0) {
       if (this.digit >= 3 && this.digit <= 10) {
@@ -110,18 +119,20 @@ Tafgeet.prototype.parse = function () {
           " و" +
           this.read(this.fraction) +
           " " +
-          this.currencies[this.currency].fractions;
+          this.currencies[this.computedOptions.currency].fractions;
       } else {
         str +=
           " و" +
           this.read(this.fraction) +
           " " +
-          this.currencies[this.currency].fraction;
+          this.currencies[this.computedOptions.currency].fraction;
       }
     }
   }
-
-  str += " لا غير";
+  
+  if(this.computedOptions.endtWith) {
+    str += " " + this.computedOptions.endtWith;
+  }
   return str;
 };
 
