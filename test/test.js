@@ -43,16 +43,25 @@ describe('Reading numbers from 1 - 999', function() {
 });
 describe('Reading full amounts without a currecy specified', function() {
     it('should read 7,564,654', function() {
-        assert.equal("فقط سبعة ملايين وخمسمائة وأربعة وستون ألف وستمائة وأربعة وخمسون لا غير", new Tafgeet('7564654', {currency: ''}).parse());
+        assert.equal("فقط سبعة ملايين وخمسمائة وأربعة وستون ألف وستمائة وأربعة وخمسون لا غير", new Tafgeet('7564654', {currency: null}).parse());
     });
     it('should read 12', function() {
-        assert.equal("فقط أثني عشر لا غير", new Tafgeet('12', {currency: ''}).parse());
+        assert.equal("فقط أثني عشر لا غير", new Tafgeet('12', {currency: null}).parse());
     });
     it('should read 74', function() {
-        assert.equal("فقط أربعة وسبعون لا غير", new Tafgeet('74', {currency: ''}).parse());
+        assert.equal("فقط أربعة وسبعون لا غير", new Tafgeet('74', {currency: null}).parse());
     });
     it('should read 234', function() {
-        assert.equal("فقط مائتين وأربعة وثلاثون لا غير", new Tafgeet('234', {currency: ''}).parse());
+        assert.equal("فقط مائتين وأربعة وثلاثون لا غير", new Tafgeet('234', {currency: null}).parse());
+    });
+    it('should read 234 without a startWith specified', function() {
+        assert.equal("مائتين وأربعة وثلاثون لا غير", new Tafgeet('234', {currency: null, startWith: null}).parse());
+    });
+    it('should read 234 without a endWith specified', function() {
+        assert.equal("فقط مائتين وأربعة وثلاثون", new Tafgeet('234', {currency: null, endWith: null}).parse());
+    });
+    it('should read 234 without a endWith and startWith specified', function() {
+        assert.equal("مائتين وأربعة وثلاثون", new Tafgeet('234', {currency: null, startWith: null, endWith: null}).parse());
     });
 });
 describe('Reading full amounts', function() {
