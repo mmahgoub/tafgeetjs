@@ -27,7 +27,7 @@ An NPM module to convert currency digits into written Arabic words
 | --------- | ------------- | ------ | ----------------------------------- |
 | currency  | "SDG"         | String | the currency name                   |
 | startWith | "فقط"         | String | the first word before currency text |
-| endWith   | "لا غير"      | String | the last word before currency text  |
+| endWith   | "لا غير"      | String | the last word after currency text  |
 
 ## Supported currencies:
 
