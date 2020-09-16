@@ -107,7 +107,7 @@ Tafgeet.prototype.parse = function () {
     }
   }
 
-  if (this.computedOptions.currency != "") {
+  if (this.computedOptions.currency) {
     if (this.digit >= 3 && this.digit <= 10) {
       str += " " + this.currencies[this.computedOptions.currency].plural;
     } else {
