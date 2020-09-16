@@ -130,8 +130,8 @@ Tafgeet.prototype.parse = function () {
     }
   }
   
-  if(this.computedOptions.endtWith) {
-    str += " " + this.computedOptions.endtWith;
+  if(this.computedOptions.endWith) {
+    str += " " + this.computedOptions.endWith;
   }
   return str;
 };
