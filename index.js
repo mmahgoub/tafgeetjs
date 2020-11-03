@@ -354,6 +354,13 @@ Tafgeet.prototype.currencies = {
     fraction: "قرش",
     fractions: "قروش",
     decimals: 2
+  },
+  JOD: {
+    singular: "دينار اردني",
+    plural: "دنانير اردنيه",
+    fraction: "قرش",
+    fractions: "قروش",
+    decimals: 3
   }
 };
 
