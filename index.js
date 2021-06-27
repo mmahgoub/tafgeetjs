@@ -33,7 +33,7 @@ function Tafgeet(digit) {
   this.currency = currency;
 }
 
-Tafgeet.prototype.parse = function () {
+Tafgeet.prototype.number = function () {
   var serialized = [];
   var tmp = [];
   var inc = 1;
@@ -78,7 +78,6 @@ Tafgeet.prototype.parse = function () {
   }
 
   var str = "";
-  str += "فقط ";
 
   if (this.length() >= 1 && this.length() <= 3) {
     str += this.read(this.digit);
@@ -121,8 +120,11 @@ Tafgeet.prototype.parse = function () {
     }
   }
 
-  str += " لا غير";
   return str;
+}
+
+Tafgeet.prototype.parse = function () {
+  return "فقط " + this.number() +" لا غير";
 };
 
 Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
