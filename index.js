@@ -6,59 +6,66 @@
  */
 
 function Tafgeet(digit) {
-  var currency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "SDG";
-  
+  let currency =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "SDG";
+
   //Split fractions
-  var splitted = digit.toString().split(".");
+  let splitted = digit.toString().split(".");
   this.fraction = 0;
   if (splitted.length > 1) {
-    var fraction;
-    if(splitted[1].length > 1){
+    let fraction;
+    if (splitted[1].length > 1) {
       fraction = parseInt(splitted[1]);
       if (fraction >= 1 && fraction <= 99) {
-        this.fraction =  splitted[1].length === 1 ? fraction * 10 : fraction;
+        this.fraction = splitted[1].length === 1 ? fraction * 10 : fraction;
       } else {
         //trim it
-        var trimmed = Array.from(splitted[1]);
+        let trimmed = Array.from(splitted[1]);
         this.fraction = "";
-        for (var index = 0; index < this.currencies[currency].decimals; index++) {
+        for (
+          let index = 0;
+          index < this.currencies[currency].decimals;
+          index++
+        ) {
           this.fraction += trimmed[index];
         }
       }
-    }else{
+    } else {
       this.fraction = parseInt(splitted[1]);
-    }    
+    }
   }
   this.digit = splitted[0];
   this.currency = currency;
 }
 
 Tafgeet.prototype.parse = function () {
-  var serialized = [];
-  var tmp = [];
-  var inc = 1;
-  var count = this.length();
-  var column = this.getColumnIndex();
+  let serialized = [];
+  let tmp = [];
+  let inc = 1;
+  let count = this.length();
+  let column = this.getColumnIndex();
   if (count >= 16) {
     console.error("Number out of range!");
     return;
   }
   //Sperate the number into columns
-  Array.from(this.digit.toString()).reverse().forEach(function (d, i) {
-    tmp.push(d);
-    if (inc == 3) {
-      serialized.unshift(tmp);
-      tmp = [];
-      inc = 0;
-    }
-    if (inc == 0 && count - (i + 1) < 3 && count - (i + 1) != 0) {
-      serialized.unshift(tmp);
-    }
-    inc++;
-  });
+  Array.from(this.digit.toString())
+    .reverse()
+    .forEach(function (d, i) {
+      tmp.push(d);
+      if (inc == 3) {
+        serialized.unshift(tmp);
+        tmp = [];
+        inc = 0;
+      }
+      if (inc == 0 && count - (i + 1) < 3 && count - (i + 1) != 0) {
+        serialized.unshift(tmp);
+      }
+      inc++;
+    });
 
   // Generate concatenation array
-  var concats = []
+  let concats = [];
   for (i = this.getColumnIndex(); i < this.columns.length; i++) {
     concats[i] = " و";
   }
@@ -66,10 +73,10 @@ Tafgeet.prototype.parse = function () {
   //We do not need some "و"s check last column if 000 drill down until otherwise
   if (this.digit > 999) {
     if (parseInt(Array.from(serialized[serialized.length - 1]).join("")) == 0) {
-      concats[parseInt(concats.length - 1)] = ""
+      concats[parseInt(concats.length - 1)] = "";
       for (i = serialized.length - 1; i >= 1; i--) {
         if (parseInt(Array.from(serialized[i]).join("")) == 0) {
-          concats[i] = ""
+          concats[i] = "";
         } else {
           break;
         }
@@ -77,14 +84,13 @@ Tafgeet.prototype.parse = function () {
     }
   }
 
-  var str = "";
-  str += "فقط ";
+  let str = "";
 
   if (this.length() >= 1 && this.length() <= 3) {
     str += this.read(this.digit);
   } else {
     for (i = 0; i < serialized.length; i++) {
-      var joinedNumber = parseInt(serialized[i].reverse().join(""));
+      let joinedNumber = parseInt(serialized[i].reverse().join(""));
       if (joinedNumber == 0) {
         column++;
         continue;
@@ -121,7 +127,7 @@ Tafgeet.prototype.parse = function () {
     }
   }
 
-  str += " لا غير";
+  str += " فقط لا غير";
   return str;
 };
 
@@ -141,9 +147,11 @@ Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
       );
     }
   } else {
-    var joinedNumber = parseInt(arr.join(""));
+    let joinedNumber = parseInt(arr.join(""));
     if (joinedNumber > 1) {
-      return this.read(joinedNumber) + " " + this[this.columns[column]].singular;
+      return (
+        this.read(joinedNumber) + " " + this[this.columns[column]].singular
+      );
     } else {
       return this[this.columns[column]].singular;
     }
@@ -151,8 +159,8 @@ Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
 };
 
 Tafgeet.prototype.read = function (d) {
-  var str = "";
-  var len = Array.from(d.toString()).length;
+  let str = "";
+  let len = Array.from(d.toString()).length;
   if (len == 1) {
     str += this.readOnes(d);
   } else if (len == 2) {
@@ -185,7 +193,7 @@ Tafgeet.prototype.readTens = function (d) {
 };
 
 Tafgeet.prototype.readHundreds = function (d) {
-  var str = "";
+  let str = "";
   str += this.hundreds["_" + Array.from(d.toString())[0] + "00"];
 
   if (
@@ -210,7 +218,7 @@ Tafgeet.prototype.length = function () {
 };
 
 Tafgeet.prototype.getColumnIndex = function () {
-  var column = null;
+  let column = null;
   if (this.length() > 12) {
     column = 0;
   } else if (this.length() <= 12 && this.length() > 9) {
@@ -232,7 +240,7 @@ Tafgeet.prototype.ones = {
   _6: "ستة",
   _7: "سبعة",
   _8: "ثمانية",
-  _9: "تسعة"
+  _9: "تسعة",
 };
 
 Tafgeet.prototype.teens = {
@@ -244,7 +252,7 @@ Tafgeet.prototype.teens = {
   _16: "ستة عشر",
   _17: "سبعة عشر",
   _18: "ثمانية عشر",
-  _19: "تسعة عشر"
+  _19: "تسعة عشر",
 };
 
 Tafgeet.prototype.tens = {
@@ -256,7 +264,7 @@ Tafgeet.prototype.tens = {
   _60: "ستون",
   _70: "سبعون",
   _80: "ثمانون",
-  _90: "تسعون"
+  _90: "تسعون",
 };
 Tafgeet.prototype.hundreds = {
   _100: "مائة",
@@ -267,27 +275,27 @@ Tafgeet.prototype.hundreds = {
   _600: "ستمائة",
   _700: "سبعمائة",
   _800: "ثمانمائة",
-  _900: "تسعمائة"
+  _900: "تسعمائة",
 };
 Tafgeet.prototype.thousands = {
   singular: "ألف",
   binary: "ألفين",
-  plural: "ألآف"
+  plural: "ألآف",
 };
 Tafgeet.prototype.milions = {
   singular: "مليون",
   binary: "مليونين",
-  plural: "ملايين"
+  plural: "ملايين",
 };
 Tafgeet.prototype.bilions = {
   singular: "مليار",
   binary: "مليارين",
-  plural: "مليارات"
+  plural: "مليارات",
 };
 Tafgeet.prototype.trilions = {
   singular: "ترليون",
   binary: "ترليونين",
-  plural: "ترليونات"
+  plural: "ترليونات",
 };
 Tafgeet.prototype.columns = ["trilions", "bilions", "milions", "thousands"];
 
@@ -297,64 +305,64 @@ Tafgeet.prototype.currencies = {
     plural: "جنيهات سودانية",
     fraction: "قرش",
     fractions: "قروش",
-    decimals: 2
+    decimals: 2,
   },
   SAR: {
     singular: "ريال سعودي",
     plural: "ريالات سعودية",
     fraction: "هللة",
     fractions: "هللات",
-    decimals: 2
+    decimals: 2,
   },
   QAR: {
     singular: "ريال قطري",
     plural: "ريالات قطرية",
     fraction: "درهم",
     fractions: "دراهم",
-    decimals: 2
+    decimals: 2,
   },
   AED: {
     singular: "درهم أماراتي",
     plural: "دراهم أماراتية",
     fraction: "فلس",
     fractions: "فلوس",
-    decimals: 2
+    decimals: 2,
   },
   EGP: {
     singular: "جنيه مصري",
     plural: "جنيهات مصرية",
     fraction: "قرش",
     fractions: "قروش",
-    decimals: 2
+    decimals: 2,
   },
   USD: {
     singular: "دولار أمريكي",
     plural: "دولارات أمريكية",
     fraction: "سنت",
     fractions: "سنتات",
-    decimals: 2
+    decimals: 2,
   },
   AUD: {
     singular: "دولار أسترالي",
     plural: "دولارات أسترالية",
     fraction: "سنت",
     fractions: "سنتات",
-    decimals: 2
+    decimals: 2,
   },
   TND: {
     singular: "دينار تونسي",
     plural: "دنانير تونسية",
     fraction: "مليم",
     fractions: "مليمات",
-    decimals: 3
+    decimals: 3,
   },
   TRY: {
     singular: "ليرة تركية",
     plural: "ليرات تركية",
     fraction: "قرش",
     fractions: "قروش",
-    decimals: 2
-  }
+    decimals: 2,
+  },
 };
 
 module.exports = Tafgeet;
