@@ -142,9 +142,13 @@ Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
     }
   } else {
     var joinedNumber = parseInt(arr.join(""));
+    if (joinedNumber > 2 && joinedNumber < 11) {
+      return this.read(joinedNumber) + " " + this[this.columns[column]].plural;
+    }
     if (joinedNumber > 1) {
       return this.read(joinedNumber) + " " + this[this.columns[column]].singular;
-    } else {
+    }
+    else {
       return this[this.columns[column]].singular;
     }
   }
