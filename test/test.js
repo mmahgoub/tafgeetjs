@@ -78,7 +78,7 @@ describe('Reading full amounts', function() {
         assert.equal("فقط ألفين وأربعمائة وخمسة وخمسون جنيه سوداني لا غير", new Tafgeet('2455').parse());
     });
     it('should read SDG 10,000', function() {
-        assert.equal("فقط عشرة ألف جنيه سوداني لا غير", new Tafgeet('10000').parse());
+        assert.equal("فقط عشرة ألآف جنيه سوداني لا غير", new Tafgeet('10000').parse());
     });
     it('should read SDG 12,444', function() {
         assert.equal("فقط أثني عشر ألف وأربعمائة وأربعة وأربعون جنيه سوداني لا غير", new Tafgeet('12444').parse());
@@ -105,7 +105,7 @@ describe('Reading full amounts', function() {
         assert.equal("فقط مليار وألف جنيه سوداني لا غير", new Tafgeet('1000001000').parse());
     });
     it('should read SDG 10,010,001,000', function() {
-        assert.equal("فقط عشرة مليار وعشرة مليون وألف جنيه سوداني لا غير", new Tafgeet('10010001000').parse());
+        assert.equal("فقط عشرة مليارات وعشرة ملايين وألف جنيه سوداني لا غير", new Tafgeet('10010001000').parse());
     });
     it('should read SDG 1,001,000,001,000', function() {
         assert.equal("فقط ترليون ومليار وألف جنيه سوداني لا غير", new Tafgeet('1001000001000').parse());
@@ -117,10 +117,10 @@ describe('Reading full amounts', function() {
         assert.equal("فقط ترليون ومائة مليون وواحد جنيه سوداني لا غير", new Tafgeet('1000100000001').parse());
     });
     it('should read SDG 10,000,000', function() {
-        assert.equal("فقط عشرة مليون جنيه سوداني لا غير", new Tafgeet('10000000').parse());
+        assert.equal("فقط عشرة ملايين جنيه سوداني لا غير", new Tafgeet('10000000').parse());
     });
     it('should read SDG 10,000,001', function() {
-        assert.equal("فقط عشرة مليون وواحد جنيه سوداني لا غير", new Tafgeet('10000001').parse());
+        assert.equal("فقط عشرة ملايين وواحد جنيه سوداني لا غير", new Tafgeet('10000001').parse());
     });
     it('should read TND 1,001', function() {
         assert.equal("فقط ألف وواحد دينار تونسي لا غير", new Tafgeet('1001','TND').parse());
@@ -128,8 +128,8 @@ describe('Reading full amounts', function() {
     it('should read TND 556,563.999', function() {
         assert.equal("فقط خمسمائة وستة وخمسون ألف وخمسمائة وثلاثة وستون دينار تونسي وتسعمائة وتسعة وتسعون مليم لا غير", new Tafgeet('556563.999','TND').parse());
     });
-    it('should read SDG 10,001', function() {
-        assert.equal("فقط عشرة ألف وواحد جنيه سوداني لا غير", new Tafgeet('10001').parse());
+    it('should read SDG 11,001', function() {
+        assert.equal("فقط عشرة ألآف وواحد جنيه سوداني لا غير", new Tafgeet('10001').parse());
     });
     it('should read SDG 556,563.20', function() {
         assert.equal("فقط خمسمائة وستة وخمسون ألف وخمسمائة وثلاثة وستون جنيه سوداني وعشرون قرش لا غير", new Tafgeet('556563.20').parse());
