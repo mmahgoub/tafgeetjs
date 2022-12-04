@@ -7,16 +7,16 @@
 
 function Tafgeet(digit) {
   var currency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "SDG";
-  
+
   //Split fractions
   var splitted = digit.toString().split(".");
   this.fraction = 0;
   if (splitted.length > 1) {
     var fraction;
-    if(splitted[1].length > 1){
+    if (splitted[1].length > 1) {
       fraction = parseInt(splitted[1]);
       if (fraction >= 1 && fraction <= 99) {
-        this.fraction =  splitted[1].length === 1 ? fraction * 10 : fraction;
+        this.fraction = splitted[1].length === 1 ? fraction * 10 : fraction;
       } else {
         //trim it
         var trimmed = Array.from(splitted[1]);
@@ -25,9 +25,9 @@ function Tafgeet(digit) {
           this.fraction += trimmed[index];
         }
       }
-    }else{
+    } else {
       this.fraction = parseInt(splitted[1]);
-    }    
+    }
   }
   this.digit = splitted[0];
   this.currency = currency;
@@ -292,6 +292,14 @@ Tafgeet.prototype.trilions = {
 Tafgeet.prototype.columns = ["trilions", "bilions", "milions", "thousands"];
 
 Tafgeet.prototype.currencies = {
+
+  IQD: {
+    singular: "دينار عراقي",
+    plural: "دنانير عراقي",
+    fraction: "فلس",
+    fractions: "فلوس",
+    decimals: 2
+  },
   SDG: {
     singular: "جنيه سوداني",
     plural: "جنيهات سودانية",

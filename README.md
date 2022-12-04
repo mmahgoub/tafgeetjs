@@ -11,6 +11,8 @@ An NPM module to convert currency digits into written Arabic words
 `var stringText = new Tafgeet(556563.20, 'SDG').parse();` this will produce: 'فقط خمسمائة وستة وخمسون ألف وخمسمائة وثلاثة وستون جنيه سوداني وعشرون قرش لا غير'.
 
 ## Supported currencies: 
+
+- IQD (Iraqi Dinar)
 - SDG (Sudanese Pound) - *Default*
 - SAR (Saudi Riyal)
 - QAR (Qatari Riyal)
