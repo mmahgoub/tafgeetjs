@@ -12,22 +12,14 @@ function Tafgeet(digit) {
   var splitted = digit.toString().split(".");
   this.fraction = 0;
   if (splitted.length > 1) {
-    var fraction;
-    if(splitted[1].length > 1){
-      fraction = parseInt(splitted[1]);
-      if (fraction >= 1 && fraction <= 99) {
-        this.fraction =  splitted[1].length === 1 ? fraction * 10 : fraction;
-      } else {
-        //trim it
-        var trimmed = Array.from(splitted[1]);
-        this.fraction = "";
-        for (var index = 0; index < this.currencies[currency].decimals; index++) {
-          this.fraction += trimmed[index];
-        }
-      }
-    }else{
-      this.fraction = parseInt(splitted[1]);
-    }    
+    // Normalise the fraction to the currency's number of decimal places:
+    // "5" -> "50" (2 decimals) or "500" (3 decimals), "200" -> "20" (2 decimals).
+    var decimals = this.currencies[currency] ? this.currencies[currency].decimals : 2;
+    var fraction = splitted[1];
+    while (fraction.length < decimals) {
+      fraction += "0";
+    }
+    this.fraction = parseInt(fraction.substring(0, decimals));
   }
   this.digit = splitted[0];
   this.currency = currency;
@@ -80,7 +72,19 @@ Tafgeet.prototype.parse = function () {
   var str = "";
   str += "فقط ";
 
-  if (this.length() >= 1 && this.length() <= 3) {
+  var hasCurrency = this.currency != "";
+  var integerIsZero = parseInt(this.digit) == 0;
+
+  // Amounts below 1 read only the fraction clause (issue #15)
+  if (integerIsZero && hasCurrency && this.fraction != 0) {
+    str += this.readFraction();
+    str += " لا غير";
+    return str;
+  }
+
+  if (integerIsZero) {
+    str += "صفر";
+  } else if (this.length() >= 1 && this.length() <= 3) {
     str += this.read(this.digit);
   } else {
     for (i = 0; i < serialized.length; i++) {
@@ -98,31 +102,27 @@ Tafgeet.prototype.parse = function () {
     }
   }
 
-  if (this.currency != "") {
+  if (hasCurrency) {
     if (this.digit >= 3 && this.digit <= 10) {
       str += " " + this.currencies[this.currency].plural;
     } else {
       str += " " + this.currencies[this.currency].singular;
     }
     if (this.fraction != 0) {
-      if (this.digit >= 3 && this.digit <= 10) {
-        str +=
-          " و" +
-          this.read(this.fraction) +
-          " " +
-          this.currencies[this.currency].fractions;
-      } else {
-        str +=
-          " و" +
-          this.read(this.fraction) +
-          " " +
-          this.currencies[this.currency].fraction;
-      }
+      str += " و" + this.readFraction();
     }
   }
 
   str += " لا غير";
   return str;
+};
+
+Tafgeet.prototype.readFraction = function () {
+  var word =
+    this.digit >= 3 && this.digit <= 10
+      ? this.currencies[this.currency].fractions
+      : this.currencies[this.currency].fraction;
+  return this.read(this.fraction) + " " + word;
 };
 
 Tafgeet.prototype.addSuffixPrefix = function (arr, column) {
