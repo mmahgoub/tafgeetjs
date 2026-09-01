@@ -141,9 +141,53 @@ describe('Reading full amounts', function() {
         assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني لا غير", new Tafgeet('55000051000').parse());
     });
     it('should read SDG 55,000,051,000.2', function() {
-        assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني وٱثنين قرش لا غير", new Tafgeet('55000051000.2').parse());
+        assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني وعشرون قرش لا غير", new Tafgeet('55000051000.2').parse());
     });
     it('should read SDG 55,000,051,000.1', function() {
-        assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني وواحد قرش لا غير", new Tafgeet(55000051000.1).parse());
+        assert.equal("فقط خمسة وخمسون مليار وواحد وخمسون ألف جنيه سوداني وعشرة قرش لا غير", new Tafgeet(55000051000.1).parse());
+    });
+});
+describe('Issue #15: single decimal digit fractions and zero integer part', function() {
+    it('should read the README example as a Number: SDG 556563.20', function() {
+        assert.equal("فقط خمسمائة وستة وخمسون ألف وخمسمائة وثلاثة وستون جنيه سوداني وعشرون قرش لا غير", new Tafgeet(556563.20, 'SDG').parse());
+    });
+    it('should read EGP 1.5 as fifty piastres', function() {
+        assert.equal("فقط واحد جنيه مصري وخمسون قرش لا غير", new Tafgeet(1.5, 'EGP').parse());
+    });
+    it('should read EGP 1.05 as five piastres', function() {
+        assert.equal("فقط واحد جنيه مصري وخمسة قرش لا غير", new Tafgeet(1.05, 'EGP').parse());
+    });
+    it('should read EGP "1.50" as fifty piastres', function() {
+        assert.equal("فقط واحد جنيه مصري وخمسون قرش لا غير", new Tafgeet('1.50', 'EGP').parse());
+    });
+    it('should read TND 1.5 as five hundred millimes', function() {
+        assert.equal("فقط واحد دينار تونسي وخمسمائة مليم لا غير", new Tafgeet(1.5, 'TND').parse());
+    });
+    it('should read TND 1.05 as fifty millimes', function() {
+        assert.equal("فقط واحد دينار تونسي وخمسون مليم لا غير", new Tafgeet(1.05, 'TND').parse());
+    });
+    it('should read TND 1.005 as five millimes', function() {
+        assert.equal("فقط واحد دينار تونسي وخمسة مليم لا غير", new Tafgeet(1.005, 'TND').parse());
+    });
+    it('should read EGP 0.75 without an integer part', function() {
+        assert.equal("فقط خمسة وسبعون قرش لا غير", new Tafgeet(0.75, 'EGP').parse());
+    });
+    it('should read EGP 0.5 as fifty piastres', function() {
+        assert.equal("فقط خمسون قرش لا غير", new Tafgeet(0.5, 'EGP').parse());
+    });
+    it('should read EGP 0.05 as five piastres', function() {
+        assert.equal("فقط خمسة قرش لا غير", new Tafgeet(0.05, 'EGP').parse());
+    });
+    it('should read EGP 0.01 as one piastre', function() {
+        assert.equal("فقط واحد قرش لا غير", new Tafgeet(0.01, 'EGP').parse());
+    });
+    it('should read EGP 0 as zero', function() {
+        assert.equal("فقط صفر جنيه مصري لا غير", new Tafgeet(0, 'EGP').parse());
+    });
+    it('should read 0.5 without a currency', function() {
+        assert.equal("فقط صفر لا غير", new Tafgeet(0.5, '').parse());
+    });
+    it('should not print the fraction for EGP 1.00', function() {
+        assert.equal("فقط واحد جنيه مصري لا غير", new Tafgeet('1.00', 'EGP').parse());
     });
 });
